@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="./resources/ol.css">
+        <link rel="stylesheet" href="resources/fontawesome-all.min.css">
+        <link href="resources/photon-geocoder-autocomplete.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="./resources/ol-layerswitcher.css">
+        <link rel="stylesheet" href="./resources/qgis2web.css">
+        <style>
+        html, body {
+            background-color: #ffffff;
+        }
+        .ol-control > * {
+            background-color: #f8f8f8!important;
+            color: #444444!important;
+            border-radius: 0px;
+        }
+        .ol-attribution a, .gcd-gl-input::placeholder, .search-layer-input-search::placeholder {
+            color: #444444!important;
+        }
+        .search-layer-input-search {
+            background-color: #f8f8f8!important;
+        }
+        .ol-control > *:focus, .ol-control >*:hover {
+            background-color: rgba(248, 248, 248, 0.7)!important;
+        } 
+        .ol-control {
+            background-color: rgba(255,255,255,.4) !important;
+            padding: 2px !important;
+        } 
+
+        /* Custom Attribution Styling */
+        .custom-attribution {
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            z-index: 2000;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 4px 10px;
+            font-family: sans-serif;
+            font-size: 11px;
+            border-radius: 3px;
+            pointer-events: none;
+            border: 1px solid #ccc;
+            color: #444444;
+        }
+
+        /* Home Button Styling */
+        .ol-zoom-extent {
+            top: 65px; /* Positions below the standard +/- zoom buttons */
+            left: .5em;
+        }
+        </style>
+
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title>Dams and Reservoirs in Tigray</title>
+    </head>
+    <body>
+        <h1 style="text-align:center; margin: 10px 0;">Dams and Reservoirs in Tigray</h1>
+        
+        <div id="map">
+            <!-- Project Owner and Data Source Overlay -->
+            <div class="custom-attribution">
+                Project Owner: <strong>Michael Menker Girma m.menker@yahoo.com</strong> | 
+                Data Source: <strong>Copernicus Data Space Ecosystem; OCHA humanitarian data</strong>
+            </div>
+
+            <div id="popup" class="ol-popup">
+                <a href="#" id="popup-closer" class="ol-popup-closer"></a>
+                <div id="popup-content"></div>
+            </div>
+        </div>
+
+        <script src="resources/qgis2web_expressions.js"></script>
+        <script src="./resources/functions.js"></script>
+        <script src="./resources/ol.js"></script>
+        <script src="./resources/ol-layerswitcher.js"></script>
+        <script src="resources/photon-geocoder-autocomplete.min.js"></script>
+        <script src="layers/Tigray_0.js"></script>
+        <script src="layers/Tigray_road_1.js"></script>
+        <script src="layers/DamsandReservoirs_2.js"></script>
+        <script src="layers/Dams_3.js"></script>
+        <script src="styles/Tigray_0_style.js"></script>
+        <script src="styles/Tigray_road_1_style.js"></script>
+        <script src="styles/DamsandReservoirs_2_style.js"></script>
+        <script src="styles/Dams_3_style.js"></script>
+        <script src="./layers/layers.js" type="text/javascript"></script> 
+        <script src="./resources/Autolinker.min.js"></script>
+        <script src="./resources/qgis2web.js"></script>        
+
+        <!-- Script to initialize the Home Button (Zoom to Extent) -->
+        <script>
+            window.addEventListener('load', function() {
+                // OpenLayers creates the 'map' variable in qgis2web.js
+                if (typeof map !== 'undefined') {
+                    // Capture the Tigray view defined in QGIS as the home extent
+                    var initialExtent = map.getView().calculateExtent(map.getSize());
+                    
+                    var homeControl = new ol.control.ZoomToExtent({
+                        extent: initialExtent,
+                        label: 'H', // Text on the button
+                        tipLabel: 'Zoom to Tigray Extent'
+                    });
+                    
+                    map.addControl(homeControl);
+                }
+            });
+        </script>
+    </body>
+</html>
